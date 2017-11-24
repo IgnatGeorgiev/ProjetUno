@@ -33,13 +33,13 @@ def indiceVcarte(n) :
     """retourne valeur et couleur"""
     return str(indiceVnumero(n))+" "+indiceVcouleur(n)
 #### pioche
-def pioche(paquet) :
+def piocher(paquet) :
     """Pioche la dernière carte du paquet"""
     carte  = paquet.pop()
     return carte
 #### main du joueur
-def pioche_V2(pioche,main,nb) :
-    """ pioche,Modifie la main du joueur et la paquet"""
+def piocher_V2(pioche,main,nb) :
+    """ Modifie la main du joueur et la pioche"""
     for e in range(0,nb) :
         main.append(pioche(pioche))
 #### Affichage de la main
@@ -47,6 +47,15 @@ def affich_main(main) :
     """affiche la main du joueur avec couleur et valeur""" 
     for e in main :
         print(indiceVcarte(e))
-
+#### Pioche vide ?
+def piochmaker(pioche,pile) :
+    """ Modifie la pioche pour en créer une nouvelle
+    à partir de la pile de jeu"""
+    lastcard = pile.pop()
+    for e in pile:
+        pioche.append(e)
+        pile.remove(e) # I remove all the elements of the pile to reset it
+    pile = [lastcard] # I put back the last card in the pile to allow players to know what they have to play next
+    random.shuffle(pioche) # To mix pile cards with pioche cards
 
     
