@@ -32,7 +32,7 @@ def indiceVnumero(n):
 def indiceVcarte(n) :
     """retourne valeur et couleur"""
     return str(indiceVnumero(n))+" "+indiceVcouleur(n)
-#### pioche1
+#### pioche
 def pioche(paquet) :
     """Pioche la dernière carte du paquet"""
     carte  = paquet.pop()
