@@ -108,6 +108,3 @@ def choixcarte(main,jeu) :
              lst = [main[choix-1]]
         return indiceVcarte(lst[0])
 
-print(indiceVcarte(54))
-print(choixcarte([57,18,27],[54]))
-
