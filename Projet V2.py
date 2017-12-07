@@ -107,4 +107,4 @@ def choixcarte(main,jeu) :
              choix = int(input(MSG))
              lst = [main[choix-1]]
         return indiceVcarte(lst[0])
-
+#### Partie C
