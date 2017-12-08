@@ -55,13 +55,13 @@ def piocher(paquet) :
 def piocher_V2(pioche,main,nb) :
     """ Modifie la main du joueur et la pioche"""
     for e in range(0,nb) :
-        main.append(pioche(pioche))
+        main.append(pioche.pop())
 #### Affichage de la main
 def affich_main(main) :
     """affiche la main du joueur avec couleur et valeur""" 
     for e in main :
         print(indiceVcarte(e))
-#### Pioche vide ?
+#### Pioche vide ?piocher_V2
 def piochmaker(pioche,pile) :
     """ Modifie la pioche pour en créer une nouvelle
     à partir de la pile de jeu"""
@@ -106,5 +106,69 @@ def choixcarte(main,jeu) :
         while verifieur(jeu,lst) == 'Non' :
              choix = int(input(MSG))
              lst = [main[choix-1]]
-        return indiceVcarte(lst[0])
+        return lst[0]
 #### Partie C
+def gestiondesjoueurs():
+    """Gestion des joueurs"""
+    nombrejoueurs = int(input("Nombre des joueurs? "))
+    joueurs = {}
+    nombrecartes = int(input("Nombres de cartes pour chacun? "))
+    paquet = MelangePaquet()
+    for i in range(0,nombrejoueurs):
+        main = []
+        nom = input("Nom de joueur? ")
+        piocher_V2(paquet,main,nombrecartes)
+        joueurs[nom] = main
+    return joueurs
+def sensderotation(dernierecarte,joueurs,joueurprec):
+    """Sens de rotation et prochain joueur"""
+    listejoueurs = list(joueurs.keys())
+    imax = len(listejoueurs)-1
+    prochainjoueur=""
+    for joueur in listejoueurs:
+        if joueur == joueursprec:
+            if indiceVnumero(dernierecarte) == 11:
+                if listejoueurs.index(joueur) == 0:
+                    prochainjoueur = listejoueurs[imax]
+                else:
+                    prochainjoueur = listejoueurs[listejoueurs.index(joueur)-1]
+
+            elif indiceVnumero(dernierecarte) == 12:
+                if listejoueurs.index(joueur) == imax:
+                    prochainjoueur = listejoueurs[1]
+                elif listejoueurs.index(joueur) == imax-1:
+                    prochainjoueur = listejoueurs[0]
+                else :
+                    prochainjoueur = listejoueurs[listejoueurs.index(joueur)+2]
+            else:
+                if listejoueurs.index(joueur) == imax:
+                     prochainjoueur = listejoueurs[0]
+                else:
+                    prochainjoueur = listejoueurs[listejoueurs.index(joueur)+1]
+    return prochainjoueur
+def testvicoire(joueurs,joueurcourant):
+    """Test de victoire et fin de partie"""
+    return joueurs[joueurcourant] == []
+
+def tourdejeu(joueur,joueurs,jeu,pioche):
+    """Tour De Jeu"""
+    i=0
+    cartejoue =""
+    while i < 3:
+        carteapioch = nbreapiocher(jeu,joueurs[joueur])
+        if carteapioch > 0 :
+            if pioche == [] : piochmaker(pioche,jeu)
+            piocher_V2(pioche,joueurs[joueur],carteapioch)
+            i+=1
+        else:
+            cartejoue = choixcarte(joueurs[joueur],jeu)
+            joueurs[joueur].remove(cartejoue)
+            jeu.append(cartejoue)
+            break
+    if testvicoire(joueurs, joueur):
+        print(joueur," gagne!")
+    else:
+        prochainjoueur= sensderotation(jeu[len(jeu)-1],joueurs,joueur)
+    
+    return prochainjoueur
+        
