@@ -51,10 +51,6 @@ def piocher_V2(pioche,main,nb) :
     """ Modifie la main du joueur et la pioche"""
     for e in range(0,nb) : # pioche un nombre nb de fois donné en argument
         main.append(pioche.pop())
-def affich_main(main) :
-    """affiche la main du joueur avec couleur et valeur""" 
-    for e in main :
-        print(indiceVcarte(e))
 def piochmaker(pioche,pile) :
     """ Modifie la pioche pour en créer une nouvelle
     à partir de la pile de jeu"""
@@ -184,19 +180,20 @@ dic = gestiondesjoueurs(MelangePaquet)
 player = list(dic.keys())[0]
 jeu = []
 pile = []
-aux = 0 ; i = 0; j=0
-while not testvictoire(dic,player) :
+aux = 0 ; i = 0; j=0  #variables utilisée dans la fonction tour de jeu 
+sens = 0 # variable utilisée dans la fonctioon sensderotation
+while not testvictoire(dic,player) :  # Vérifie si le joueur courant a gagné
     lst = []; lst3 = []
     for e in dic[player] :
-        lst.append(indiceVcarte(e))
+        lst.append(indiceVcarte(e))  #affiche la main du joueur avec le nom des cartes
     if jeu != [] :
         for e in jeu :
             lst3.append(indiceVcarte(e))
-        print(lst3)
+        print(lst3)  #affiche le jeu avec les noms des cartes
     print(player , lst)
     player = tourdejeu(player,dic,jeu,paquet)
 print("Le gagnant est", player)
-del dic[player]
+del dic[player] #supprime la main du joueur gagnant puis affiche les mains des perdants
 for e in dic :
     lst2 = []
     for x in dic[e]:
