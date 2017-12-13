@@ -151,9 +151,9 @@ def testvictoire(joueurs,joueurcourant):
     return joueurs[joueurcourant] == [] #Renvoie True si la main du joueur est vide
 def tourdejeu(joueur,joueurs,jeu,pioche):
     """Tour De Jeu"""
-    if jeu != [] : #La partie a commencé 
-        carteapioch = nbreapiocher(jeu[len(jeu)-1],joueurs[joueur])
-        while carteapioch == 0 and  indiceVcarte(jeu[len(jeu)-1]) == "+2" or carteapioch == 0 and indiceVcarte(jeu[len(jeu)-1]) == "+4" :
+     if jeu != [] : #La partie a commencé 
+        carteapioch = nbreapiocher(jeu[len(jeu)-1],joueurs[joueur],jeu)
+        if carteapioch == 0 and  indiceVcarte(jeu[len(jeu)-1]) == "+2" or carteapioch == 0 and indiceVcarte(jeu[len(jeu)-1]) == "+4" :
             if indiceVcarte(jeu[len(jeu)-1]) == "+2" :global i; i += 2
             elif indiceVcarte(jeu[len(jeu)-1]) == "+4": global j ;j += 4
             global aux
@@ -162,19 +162,26 @@ def tourdejeu(joueur,joueurs,jeu,pioche):
             if aux > 0 : carteapioch = aux
             if pioche == [] : piochmaker(pioche,pile)
             piocher_V2(pioche,joueurs[joueur],carteapioch)
+            prochainjoueur = sensderotation(jeu[len(jeu)-1],joueurs,joueur)
             if carteapioch>1 :
                 for e in jeu :
-                    if indiceVnumero(e) == 10 and len(jeu)!=1 or indiceVcarte(e) == "+4" and len(jeu)!=1: jeu.remove(e) 
+                    if indiceVnumero(e) == 10 or indiceVcarte(e) == "+4" : jeu.remove(e)
+                listejoueurs = list(joueurs.keys()) ; imax = len(listejoueurs)-1
+                if listejoueurs.index(joueur) == imax:
+                    prochainjoueur = listejoueurs[0]
+                else:
+                    prochainjoueur = listejoueurs[listejoueurs.index(joueur)+1]                    
         else:
             cartejoue = choixcarte(joueurs[joueur],jeu)
             joueurs[joueur].remove(cartejoue)
             jeu.append(cartejoue)
+            prochainjoueur = sensderotation(jeu[len(jeu)-1],joueurs,joueur)
     else :
         choix = int(input("Quelle carte voulez vous jouez ?(1ere,2eme,...) "))
         cartejoue = joueurs[joueur][choix-1]
         joueurs[joueur].remove(cartejoue)
         jeu.append(cartejoue)
-    prochainjoueur = sensderotation(jeu[len(jeu)-1],joueurs,joueur)
+        prochainjoueur = sensderotation(jeu[len(jeu)-1],joueurs,joueur)
     return prochainjoueur
 #### MAIN PROGRAM
 paquet = MelangePaquet()
