@@ -29,7 +29,7 @@ def indiceVnumero(n): # n est l'indice
     elif n in range(101,105) : num = 13
     else : num = 14   # 105<=n<=108 
     return num
-def indiceVcarte(n) :
+def indiceVcarte(n) : # n est l'indice de la carte
     """retourne valeur et couleur"""
     if indiceVnumero(n) == 10 :
         aux = "+2"+" "+indiceVcouleur(n)
@@ -49,8 +49,8 @@ def piocher(paquet) :
     return carte
 def piocher_V2(pioche,main,nb) :
     """ Modifie la main du joueur et la pioche"""
-    for e in range(0,nb) :
-        main.append(pioche.pop())
+    for e in range(0,nb) : # pioche un nombre nb de fois donné en argument
+        main.append(pioche.pop()) 
 def affich_main(main) :
     """affiche la main du joueur avec couleur et valeur""" 
     for e in main :
@@ -58,14 +58,13 @@ def affich_main(main) :
 def piochmaker(pioche,pile) :
     """ Modifie la pioche pour en créer une nouvelle
     à partir de la pile de jeu"""
-    lastcard = pile.pop()
+    lastcard = pile.pop() # garde de côté la dernière carte de la pile
     for e in pile:
-        pioche.append(e)
-        pile.remove(e) # I remove all the elements of the pile to reset it
-    pile = [lastcard] # I put back the last card in the pile to allow players to know what they have to play next
-    random.shuffle(pioche) # To mix pile cards with pioche cards
+        pioche.append(pile.pop()) 
+    pile = [lastcard] # Remet la carte dans la pile de jeu pour la suite
+    random.shuffle(pioche) 
 #### PARTIE B
-def verifieur(jeu,main) :  #Jeu est une liste 
+def verifieur(jeu,main) :  
     """Vérifie si on peut poser une carte"""
     Indic = "Non"
     couleur = indiceVcouleur(jeu[len(jeu)-1])
@@ -178,24 +177,14 @@ jeu = []
 pile = []
 aux = 0 ; i = 0; j=0
 while not testvictoire(dic,player) :
-    lst = []; lst3 = []
-    for e in dic[player] :
-        lst.append(indiceVcarte(e))
+    affich_main(dic[player])
     if jeu != [] :
-        for e in jeu :
-            lst3.append(indiceVcarte(e))
-        print(lst3)
+        affich_main(jeu)
     print(player , lst)
     player = tourdejeu(player,dic,jeu,paquet)
 print("Le gagnant est", player)
 del dic[player]
-for e in dic :
-    lst2 = []
-    for x in dic[e]:
-        lst2.append(indiceVcarte(x))
-    dic[e] = lst2
-print(dic)
-
+for e in dic : affich_main(dic[e])
        
     
 
