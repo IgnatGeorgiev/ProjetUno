@@ -67,10 +67,8 @@ def verifieur(jeu,main) :  #Jeu est une liste
     couleur = indiceVcouleur(jeu[len(jeu)-1])
     numero = indiceVnumero(jeu[len(jeu)-1])
     for e in main :
-        if indiceVnumero(e)==10 and indiceVcouleur(e) == couleur : Indic = "Oui"   #Le joueur possède un +2 de meme couleur que la carte courante
         if indiceVcarte(e) == "+4" : Indic = "Oui"    #Le joueur possède une carte de meme numero que la carte courante ou un +4
-        if numero != 10 :
-            if indiceVnumero(e) == numero : Indic = "Oui"
+        elif indiceVnumero(e) == numero : Indic = "Oui"
         if numero != 10 and numero != 14 :
             if indiceVnumero(e) == 13 : Indic = "Oui"   #Le joueur peut jouer un joker sauf sur un +  
             elif  indiceVcouleur(e)==couleur : Indic = "Oui"    #peut jouer une carte de meme couleur que la carte courante
