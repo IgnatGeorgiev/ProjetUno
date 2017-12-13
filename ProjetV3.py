@@ -1,35 +1,36 @@
 from random import randint
+sens = 0
 def MelangePaquet() :
     """Retourne le paquet mélangé"""
     Paquet = []
-    for i in range(0,108) : # Boucle 108 fois pour remplir le paquet
+    for i in range(0,108) :
         val = randint(1,108)
-        if val in Paquet :   #
-            val = randint(1,108) # Pas 2 fois la même valeur
+        if val in Paquet :
+            val = randint(1,108)
         Paquet.append(val)
     return Paquet
 Cartes = {1:0, 2:1,3:1, 4:2, 5:2, 6:3, 7:3, 8:4, 9:4, 10:5, 11:5, 12:6, 13:6, 14:7, 15:7, 16:8, 17:8, 18:9, 19:9, 20 :10, 21:10, 22:11, 23 :11, 24:12, 25:12 }
-# Dictionnaire indice(valeur) : numéro 
-def indiceVcouleur(n): # n est l'indice
+Multi = { 26:13, 27:13, 28:13, 29:13, 30:14, 31:14, 32:14, 33:14} ### les +4 sont les 4 dernieres cartes
+def indiceVcouleur(n):
     """Renvoie la couleur de la carte correspondant a l'indice
         Précondition : 1<=n<=108"""
-    if n in range(1,26) : couleur='rouge'     # couleur est une variable auxiliaire
+    if n in range(1,26) : couleur='rouge'
     elif n in range(26,51) : couleur = 'bleu'
-    elif n in range(51,76) : couleur = 'jaune'.  # les cartes sont rangées dans l'ordre : rouge,bleu,jaune,vert,multicolores 
+    elif n in range(51,76) : couleur = 'jaune'
     elif n in range(76,101) : couleur = 'vert'
-    else : couleur ='multicolore'   # 100<=n<=108
+    else : couleur ='multicolore'
     return couleur
-def indiceVnumero(n): # n est l'indice
+def indiceVnumero(n):
     """Renvoie le numéro correspondant à la carte
         Précondition : 1<=n<=100"""
-    if n in range(1,26) : num = Cartes[n]   # num est une variable auxiliaire
+    if n in range(1,26) : num = Cartes[n]
     elif n in range(26,51) : num = Cartes[n-25]
     elif n in range(51,76) : num = Cartes[n-50]
-    elif n in range(76,101) : num = Cartes[n-75]  # Utilisation du dictionnaire
+    elif n in range(76,101) : num = Cartes[n-75]
     elif n in range(101,105) : num = 13
-    else : num = 14   # 105<=n<=108 
+    else : num = 14
     return num
-def indiceVcarte(n) : # n est l'indice de la carte
+def indiceVcarte(n) :
     """retourne valeur et couleur"""
     if indiceVnumero(n) == 10 :
         aux = "+2"+" "+indiceVcouleur(n)
@@ -49,8 +50,8 @@ def piocher(paquet) :
     return carte
 def piocher_V2(pioche,main,nb) :
     """ Modifie la main du joueur et la pioche"""
-    for e in range(0,nb) : # pioche un nombre nb de fois donné en argument
-        main.append(pioche.pop()) 
+    for e in range(0,nb) :
+        main.append(pioche.pop())
 def affich_main(main) :
     """affiche la main du joueur avec couleur et valeur""" 
     for e in main :
@@ -58,13 +59,14 @@ def affich_main(main) :
 def piochmaker(pioche,pile) :
     """ Modifie la pioche pour en créer une nouvelle
     à partir de la pile de jeu"""
-    lastcard = pile.pop() # garde de côté la dernière carte de la pile
+    lastcard = pile.pop()
     for e in pile:
-        pioche.append(pile.pop()) 
-    pile = [lastcard] # Remet la carte dans la pile de jeu pour la suite
-    random.shuffle(pioche) 
+        pioche.append(e)
+        pile.remove(e) # I remove all the elements of the pile to reset it
+    pile = [lastcard] # I put back the last card in the pile to allow players to know what they have to play next
+    random.shuffle(pioche) # To mix pile cards with pioche cards
 #### PARTIE B
-def verifieur(jeu,main) :  
+def verifieur(jeu,main) :  #Jeu est une liste 
     """Vérifie si on peut poser une carte"""
     Indic = "Non"
     couleur = indiceVcouleur(jeu[len(jeu)-1])
@@ -116,16 +118,25 @@ def gestiondesjoueurs(paquet):
     return joueurs
 def sensderotation(dernierecarte,joueurs,joueurprec):
     """Sens de rotation et prochain joueur"""
+    global sens
     listejoueurs = list(joueurs.keys())
     imax = len(listejoueurs)-1
     prochainjoueur=""
     for joueur in listejoueurs:
         if joueur == joueurprec:
-                if indiceVnumero(dernierecarte) == 11:
+                if indiceVnumero(dernierecarte) == 11 and sens = 0:
+                    sens = 1
                     if listejoueurs.index(joueur) == 0:
                         prochainjoueur = listejoueurs[imax]
                     else:
                         prochainjoueur = listejoueurs[listejoueurs.index(joueur)-1]
+                elif indiceVnumero(dernierecarte) == 11 and sens = 1:
+                    sens = 0
+                    if listejoueurs.index(joueur) == 0:
+                        prochainjoueur = listejoueurs[imax]
+                    else:
+                        prochainjoueur = listejoueurs[listejoueurs.index(joueur)-1]
+                        
                 elif indiceVnumero(dernierecarte) == 12:
                     if listejoueurs.index(joueur) == imax:
                         prochainjoueur = listejoueurs[1]
@@ -177,14 +188,24 @@ jeu = []
 pile = []
 aux = 0 ; i = 0; j=0
 while not testvictoire(dic,player) :
-    affich_main(dic[player])
+    lst = []; lst3 = []
+    for e in dic[player] :
+        lst.append(indiceVcarte(e))
     if jeu != [] :
-        affich_main(jeu)
+        for e in jeu :
+            lst3.append(indiceVcarte(e))
+        print(lst3)
     print(player , lst)
     player = tourdejeu(player,dic,jeu,paquet)
 print("Le gagnant est", player)
 del dic[player]
-for e in dic : affich_main(dic[e])
+for e in dic :
+    lst2 = []
+    for x in dic[e]:
+        lst2.append(indiceVcarte(x))
+    dic[e] = lst2
+print(dic)
+
        
     
 
