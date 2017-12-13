@@ -124,13 +124,13 @@ def sensderotation(dernierecarte,joueurs,joueurprec):
     prochainjoueur=""
     for joueur in listejoueurs:
         if joueur == joueurprec:
-                if indiceVnumero(dernierecarte) == 11 and sens = 0:
+                if indiceVnumero(dernierecarte) == 11 and sens == 0:
                     sens = 1
                     if listejoueurs.index(joueur) == 0:
                         prochainjoueur = listejoueurs[imax]
                     else:
                         prochainjoueur = listejoueurs[listejoueurs.index(joueur)-1]
-                elif indiceVnumero(dernierecarte) == 11 and sens = 1:
+                elif indiceVnumero(dernierecarte) == 11 and sens == 1:
                     sens = 0
                     if listejoueurs.index(joueur) == 0:
                         prochainjoueur = listejoueurs[imax]
