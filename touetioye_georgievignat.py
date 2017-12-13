@@ -151,7 +151,7 @@ def testvictoire(joueurs,joueurcourant):
     return joueurs[joueurcourant] == [] #Renvoie True si la main du joueur est vide
 def tourdejeu(joueur,joueurs,jeu,pioche):
     """Tour De Jeu"""
-     if jeu != [] : #La partie a commencé 
+    if jeu != [] : #La partie a commencé 
         carteapioch = nbreapiocher(jeu[len(jeu)-1],joueurs[joueur],jeu)
         if carteapioch == 0 and  indiceVcarte(jeu[len(jeu)-1]) == "+2" or carteapioch == 0 and indiceVcarte(jeu[len(jeu)-1]) == "+4" :
             if indiceVcarte(jeu[len(jeu)-1]) == "+2" :global i; i += 2
