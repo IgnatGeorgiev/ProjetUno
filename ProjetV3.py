@@ -2,32 +2,32 @@ from random import randint
 def MelangePaquet() :
     """Retourne le paquet mélangé"""
     Paquet = []
-    for i in range(0,108) :
+    for i in range(0,108) : # Boucle 108 fois pour remplir le paquet
         val = randint(1,108)
-        if val in Paquet :
-            val = randint(1,108)
+        if val in Paquet :   #
+            val = randint(1,108) # Pas 2 fois la même valeur
         Paquet.append(val)
     return Paquet
 Cartes = {1:0, 2:1,3:1, 4:2, 5:2, 6:3, 7:3, 8:4, 9:4, 10:5, 11:5, 12:6, 13:6, 14:7, 15:7, 16:8, 17:8, 18:9, 19:9, 20 :10, 21:10, 22:11, 23 :11, 24:12, 25:12 }
-Multi = { 26:13, 27:13, 28:13, 29:13, 30:14, 31:14, 32:14, 33:14} ### les +4 sont les 4 dernieres cartes
-def indiceVcouleur(n):
+# Dictionnaire indice(valeur) : numéro 
+def indiceVcouleur(n): # n est l'indice
     """Renvoie la couleur de la carte correspondant a l'indice
         Précondition : 1<=n<=108"""
-    if n in range(1,26) : couleur='rouge'
+    if n in range(1,26) : couleur='rouge'     # couleur est une variable auxiliaire
     elif n in range(26,51) : couleur = 'bleu'
-    elif n in range(51,76) : couleur = 'jaune'
+    elif n in range(51,76) : couleur = 'jaune'.  # les cartes sont rangées dans l'ordre : rouge,bleu,jaune,vert,multicolores 
     elif n in range(76,101) : couleur = 'vert'
-    else : couleur ='multicolore'
+    else : couleur ='multicolore'   # 100<=n<=108
     return couleur
-def indiceVnumero(n):
+def indiceVnumero(n): # n est l'indice
     """Renvoie le numéro correspondant à la carte
         Précondition : 1<=n<=100"""
-    if n in range(1,26) : num = Cartes[n]
+    if n in range(1,26) : num = Cartes[n]   # num est une variable auxiliaire
     elif n in range(26,51) : num = Cartes[n-25]
     elif n in range(51,76) : num = Cartes[n-50]
-    elif n in range(76,101) : num = Cartes[n-75]
+    elif n in range(76,101) : num = Cartes[n-75]  # Utilisation du dictionnaire
     elif n in range(101,105) : num = 13
-    else : num = 14
+    else : num = 14   # 105<=n<=108 
     return num
 def indiceVcarte(n) :
     """retourne valeur et couleur"""
