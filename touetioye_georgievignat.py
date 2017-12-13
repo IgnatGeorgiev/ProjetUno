@@ -77,7 +77,7 @@ def verifieur(jeu,main) :  #Jeu est une liste
             elif numero == 13 : Indic = "Oui"       #peut jouer un joker
         else : Indic = Indic   # Impossibilité de jouer
     return Indic
-def nbreapiocher(lcard,main) :
+def nbreapiocher(lcard,main,jeu) :
     """Renvoie le nombre de carte à piocher"""
     compteur2 = 0 # compte le nombre de carte à piocher selon les +2
     compteur4 = 0 # compte le nombre de carte à piocher selon les +4
